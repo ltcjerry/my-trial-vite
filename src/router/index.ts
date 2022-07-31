@@ -10,24 +10,12 @@ declare module 'vue-router' {
 const routes: Array<RouteRecordRaw> = [
     {
         path: '/',
-        redirect: '/login'
+        redirect: '/map'
     },
     {
-        path: '/login',
-        component: () => import('../components/test/Login.vue'),
-        // components: {
-        //     default: () => import('../components/test/Login.vue')
-        // },
-        meta: { title: '登录', transition: 'animate__animated animate__fadeIn' }
-    },
-    {
-        path: '/register',
-        component: () => import('../components/test/Register.vue'),
-        // components: {
-        //     default: () => import('../components/test/Register.vue'),
-        //     pinia: () => import('../components/test/PiniaTest.vue')
-        // },
-        meta: { title: '注册', transition: 'animate__animated animate__fadeOut' }
+        path: '/map',
+        component: () => import('../views/map/Index.vue'),
+        meta: { title: '高德地图', transition: 'animate__animated animate__fadeIn' }
     }
 ]
 
@@ -45,7 +33,6 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    console.log('全局前置导航守卫-beforeEach')
     if (true) {
         next()
     } else {
@@ -54,7 +41,7 @@ router.beforeEach((to, from, next) => {
 })
 
 router.afterEach((to, from) => {
-    console.log('全局后置导航守卫-afterEach')
+    
 })
 // 动态添加路由
 const addRoutes = async () => {

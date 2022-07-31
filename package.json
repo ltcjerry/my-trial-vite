@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@amap/amap-jsapi-loader": "^1.0.1",
     "animate.css": "^4.1.1",
     "gsap": "^3.10.4",
     "pinia": "^2.0.14",
