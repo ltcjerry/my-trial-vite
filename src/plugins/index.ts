@@ -1,12 +1,6 @@
-import { App, createVNode, render, VNode } from "vue";
-import Loading from "../components/test/Loading.vue";
-export const loading = {
-    install(app: App) {
-        const vNode: VNode = createVNode(Loading)
-        render(vNode, document.body)
-        app.config.globalProperties.$loading = {
-            show: vNode.component?.exposed?.show,
-            hidden: vNode.component?.exposed?.hidden
-        }
-    }
-}
+export { setupAntd } from './antd'
+export { setupAssets } from './assets'
+export { setupPlugins } from './customPlugins'
+export { setupDirectives } from './directives'
+export { setupComponents } from './customComponents'
+export { setupGlobalMethods } from './globalMethods'

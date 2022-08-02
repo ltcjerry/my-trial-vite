@@ -1,4 +1,10 @@
-import {createRouter, createWebHistory, RouteRecordRaw} from 'vue-router'
+import type { App } from 'vue'
+import {
+    createRouter, 
+    createWebHistory, 
+    RouteRecordRaw
+} from 'vue-router'
+import excludeLayout from './excludeLayout'
 
 declare module 'vue-router' {
     interface RouteMeta {
@@ -9,47 +15,24 @@ declare module 'vue-router' {
 
 const routes: Array<RouteRecordRaw> = [
     {
+        name: 'layout',
         path: '/',
-        redirect: '/map'
+        redirect: '/dashboard',
+        component: () => import(/* webpackChunkName: "layout" */ '@/layout/Index.vue'),
+        meta: { title: '首页', transition: 'animate__animated animate__fadeIn' },
+        children: []
     },
-    {
-        path: '/map',
-        component: () => import('../views/map/Index.vue'),
-        meta: { title: '高德地图', transition: 'animate__animated animate__fadeIn' }
-    }
+    ...excludeLayout
 ]
 
 const router = createRouter({
     history: createWebHistory(),
-    scrollBehavior: (to,from, savePosition) => {
-        console.log('scrollBehavior', savePosition)
-        if (savePosition) {
-            return savePosition
-        } else {
-            return { top: 0 }
-        }
-    },
     routes: routes
 })
 
-router.beforeEach((to, from, next) => {
-    if (true) {
-        next()
-    } else {
-        next('/')
-    }
-})
-
-router.afterEach((to, from) => {
-    
-})
-// 动态添加路由
-const addRoutes = async () => {
-    const res: RouteRecordRaw[] = []
-    res.forEach(item => {
-        router.addRoute(item)
-    })
-    console.log(router.getRoutes())
+export async function setupRouter(app: App) {
+    app.use(router)
+    await router.isReady()
 }
 
 export default router

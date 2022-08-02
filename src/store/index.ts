@@ -1,23 +1,10 @@
-import { defineStore } from 'pinia'
-import { Names } from './store_name'
+import { createPinia } from 'pinia'
+import type { App } from 'vue'
 
-export const useTestInfo = defineStore(Names.TEST, {
-    state: () => {
-        return {
-            current: 1,
-            name: 'jerry'
-        }
-    },
-    // 计算
-    getters: {
-        add10(): number {
-            return this.current + 10
-        }
-    },
-    // 可以做同步，异步
-    actions: {
-        setCurrent() {
-            this.current = 999
-        }
-    }
-})
+const store = createPinia()
+
+export { store }
+
+export function setupStore(app: App) {
+    app.use(store)
+}

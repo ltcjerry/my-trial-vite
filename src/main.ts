@@ -1,30 +1,32 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import { createPinia } from 'pinia'
-import router from './router'
-import {loading} from './plugins/index'
-const store = createPinia()
+import { setupStore } from '@/store'
+import { setupRouter } from '@/router'
+import { 
+    setupAntd, 
+    setupAssets, 
+    setupPlugins,
+    setupDirectives,
+    setupComponents,
+    setupGlobalMethods,
+} from '@/plugins'
+
 const app = createApp(App)
-app.use(store)
-app.use(router)
-app.use(loading)
-type Filters = {
-    format: <T>(str: T) => string
+
+function setupMyplugin() {
+    setupAssets()
+    setupAntd(app)
+    setupPlugins(app)
+    setupComponents(app)
+    setupDirectives(app)
+    setupGlobalMethods(app)
 }
 
-declare module '@vue/runtime-core' {
-    export interface ComponentCustomProperties {
-        $filters: Filters,
-        $loading: {
-            show: () => void,
-            hidden: () => void
-        }
-    }
+function setupApp() {
+    setupStore(app)
+    setupRouter(app)
+    app.mount('#app')
 }
 
-app.config.globalProperties.$filters = {
-    format<T>(val: T): string {
-        return `test: ${val}`
-    }
-}
-app.mount('#app')
+setupMyplugin()
+setupApp()
